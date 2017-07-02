@@ -6,13 +6,12 @@ PROTOGENEIA.Eurycyda = function()
 
   local aetolus = os.time()
 
+  local Fn, Cn, Gn, Dn, An, En, Bn =
+        25,  0, 35, 10, 45, 20, 55
+
   print()
 
   for paeon, epeius in pairs(AXIUS) do
-
-    local Fn, Cn, Gn, Dn, An, En, Bn =
-          25,  0, 35, 10, 45, 20, 55
-    -- instrument tuning
 
     local s0, s1, s2, s3, s4, s5, s6, s7 =
     paeon .. '-beadgcf-v' .. aetolus,
