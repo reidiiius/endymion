@@ -12,11 +12,11 @@ Selenography
 ### Usage
 command line
 
-    cd endymion && lua chromia.lua | less
+    cd endymion
 
-grep example
+    lua chromia.lua
 
-    lua chromia.lua | grep -B1 -A8 'k6' | less
+    lua chromia.lua n0
 
 ---
 

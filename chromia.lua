@@ -1,8 +1,22 @@
 #!/usr/bin/env lua
 
-require('olympiad')
-require('asterodia')
+local function Selene()
 
-PROTOGENEIA.Eurycyda()
+  local protogeneia = require('asterodia')
 
+  if type(protogeneia) == 'table' then
+
+    protogeneia.Eurycyda(arg[1])
+
+  else
+
+    print(string.format("\n\t%s\n", "protogeneia is " .. type(protogeneia)))
+
+  end
+
+end
+
+Selene()
+
+collectgarbage('collect')
 

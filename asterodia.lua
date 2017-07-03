@@ -1,43 +1,72 @@
 #!/usr/bin/env lua
 
-PROTOGENEIA = {}
+local PROTOGENEIA = {}
 
-PROTOGENEIA.Eurycyda = function()
+PROTOGENEIA.Eurycyda = function(paeon)
 
-  local aetolus = os.time()
+  local axius = require('olympiad')
 
-  local Fn, Cn, Gn, Dn, An, En, Bn =
-        25,  0, 35, 10, 45, 20, 55
+  if type(axius) == 'table' then
 
-  print()
+    if axius[paeon] then
 
-  for paeon, epeius in pairs(AXIUS) do
+      local epeius = axius[paeon]
 
-    local s0, s1, s2, s3, s4, s5, s6, s7 =
-    paeon .. '-beadgcf-v' .. aetolus,
-    string.sub(epeius, (Fn + 1), -1) .. string.sub(epeius, Cn, Fn),
-    string.sub(epeius, (Cn + 1), -1) .. string.sub(epeius, Cn, Cn),
-    string.sub(epeius, (Gn + 1), -1) .. string.sub(epeius, Cn, Gn),
-    string.sub(epeius, (Dn + 1), -1) .. string.sub(epeius, Cn, Dn),
-    string.sub(epeius, (An + 1), -1) .. string.sub(epeius, Cn, An),
-    string.sub(epeius, (En + 1), -1) .. string.sub(epeius, Cn, En),
-    string.sub(epeius, (Bn + 1), -1) .. string.sub(epeius, Cn, Bn)
+      local aetolus = paeon .. '-beadgcf-v' .. os.time()
 
-    print()
-    print(string.format("\t%s", s0))
-    print(string.format("\t%s", s1))
-    print(string.format("\t%s", s2))
-    print(string.format("\t%s", s3))
-    print(string.format("\t%s", s4))
-    print(string.format("\t%s", s5))
-    print(string.format("\t%s", s6))
-    print(string.format("\t%s", s7))
-    print()
+      local Bj, Fn, Cn, Gn, Dn, An, En, Bn, Fk =
+            50, 25,  0, 35, 10, 45, 20, 55, 30
+
+      local function tuner(qp)
+        return string.sub(epeius, (qp + 1), -1) .. string.sub(epeius, 0, qp)
+      end
+
+      local function headstock(qp)
+        return string.format("\t%s", qp)
+      end
+
+      fingerboard = {Fn, Cn, Gn, Dn, An, En, Bn} -- instrument tuning
+
+      print "\n"
+      print(headstock(aetolus))
+      for pitch = 1, #fingerboard do
+        print(headstock(tuner(fingerboard[pitch])))
+      end
+      print "\n"
+
+    else
+
+      local catalogue = {}
+      local itera = 1
+
+      for clave, data in pairs(axius) do
+        catalogue[itera] = clave
+        itera = itera + 1
+      end
+
+      table.sort(catalogue)
+
+      print()
+
+      for carte = 1, #catalogue, 1 do
+        if (carte % 7 == 0) then
+          io.write(string.format("\t%s\n", catalogue[carte]))
+        else
+          io.write(string.format("\t%s", catalogue[carte]))
+        end
+      end
+
+      print "\n"
+
+    end
+
+  else
+
+    return nil
 
   end
 
-  print()
-
 end
 
+return PROTOGENEIA
 
