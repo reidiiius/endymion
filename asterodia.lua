@@ -4,7 +4,29 @@ local PROTOGENEIA = {}
 
 PROTOGENEIA.Eurycyda = function(paeon)
 
-  local axius = require('olympiad')
+  local axius = setmetatable(require('olympiad'), {
+
+    __index = function(axius, stone)
+
+      local nyx = string.rep(string.char(95), 4) .. string.char(32)
+
+      local function peg(qp)
+        return string.sub(axius.n0, (qp + 1), -1) .. string.sub(axius.n0, 0, qp)
+      end
+
+      if stone == 'z0' then return string.rep(nyx, 12)
+      elseif stone == 'j367' then return peg(45)
+      elseif stone == 'j37' then return peg(10)
+      elseif stone == 'j7' then return peg(35)
+      elseif stone == 'n8' then return peg(0)
+      elseif stone == 'k4' then return peg(25)
+      elseif stone == 'k14' then return peg(50)
+      elseif stone == 'k145' then return peg(15)
+      else return nil
+      end
+
+    end
+  })
 
   if type(axius) == 'table' then
 
@@ -25,7 +47,7 @@ PROTOGENEIA.Eurycyda = function(paeon)
         return string.format("\t%s", qp)
       end
 
-      fingerboard = {Fn, Cn, Gn, Dn, An, En, Bn} -- instrument tuning
+      local fingerboard = {Fn, Cn, Gn, Dn, An, En, Bn} -- instrument tuning
 
       print "\n"
       print(headstock(aetolus))
@@ -44,6 +66,8 @@ PROTOGENEIA.Eurycyda = function(paeon)
         itera = itera + 1
       end
 
+      catalogue[#catalogue + 1] = 'z0'
+
       table.sort(catalogue)
 
       print()
@@ -56,7 +80,7 @@ PROTOGENEIA.Eurycyda = function(paeon)
         end
       end
 
-      print "\n"
+      print()
 
     end
 
