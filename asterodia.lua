@@ -38,9 +38,9 @@ PROTOGENEIA.Eurycyda = function(paeon)
 
       local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
-      local function peg(sign)
-        local head = string.sub(axius.n0, (sign + 1), -1)
-        local tail = string.sub(axius.n0, 0, sign)
+      local function peg(ndx)
+        local head = string.sub(axius.n0, (ndx + 1), -1)
+        local tail = string.sub(axius.n0, 0, ndx)
         return head .. tail
       end
 
@@ -69,17 +69,18 @@ PROTOGENEIA.Eurycyda = function(paeon)
       local Bj, Fn, Cn, Gn, Dn, An, En, Bn, Fk =
             50, 25,  0, 35, 10, 45, 20, 55, 30
 
-      local function tuner(sign)
-        local head = string.sub(epeius, (sign + 1), -1)
-        local tail = string.sub(epeius, 0, sign)
+      local function tuner(ndx)
+        local head = string.sub(epeius, (ndx + 1), -1)
+        local tail = string.sub(epeius, 0, ndx)
         return head .. tail
       end
 
-      local function headstock(sign)
-        return string.format("\t%s", sign)
+      local function headstock(diadem)
+        return string.format("\t%s", diadem)
       end
 
-      local fingerboard = {Fn, Cn, Gn, Dn, An, En, Bn} -- instrument tuning
+      -- instrument tuning
+      local fingerboard = {Fn, Cn, Gn, Dn, An, En, Bn}
 
       print(headstock(aetolus))
       for pitch = 1, #fingerboard do
