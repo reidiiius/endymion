@@ -10,13 +10,13 @@ Selenography
 ---
 
 ### Usage
-command line
+command-line
 
-    cd endymion
+    cd endymion/
 
     lua chromia.lua
 
-    lua chromia.lua n0
+    lua chromia.lua n0 j3
 
 ---
 

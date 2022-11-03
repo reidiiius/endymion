@@ -4,9 +4,17 @@ local function Selene()
 
   local protogeneia = require('asterodia')
 
+  if not arg[1] then
+    protogeneia.Deucalion()
+    return nil
+  end
+
   if type(protogeneia) == 'table' then
 
-    protogeneia.Eurycyda(arg[1])
+    print()
+    for k, v in ipairs(arg) do
+      protogeneia.Eurycyda(tostring(v))
+    end
 
   else
 

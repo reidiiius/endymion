@@ -2,6 +2,36 @@
 
 local PROTOGENEIA = {}
 
+PROTOGENEIA.Deucalion = function()
+
+  local axius = setmetatable(require('olympiad'), {})
+
+  local catalogue = {}
+  local itera = 1
+
+  for clave, data in pairs(axius) do
+    catalogue[itera] = clave
+    itera = itera + 1
+  end
+
+  catalogue[#catalogue + 1] = 'z0'
+
+  table.sort(catalogue)
+
+  print()
+
+  for carte = 1, #catalogue, 1 do
+    if (carte % 7 == 0) then
+      io.write(string.format("\t%s\n", catalogue[carte]))
+    else
+      io.write(string.format("\t%s", catalogue[carte]))
+    end
+  end
+
+  print()
+
+end
+
 PROTOGENEIA.Eurycyda = function(paeon)
 
   local axius = setmetatable(require('olympiad'), {
@@ -49,38 +79,15 @@ PROTOGENEIA.Eurycyda = function(paeon)
 
       local fingerboard = {Fn, Cn, Gn, Dn, An, En, Bn} -- instrument tuning
 
-      print "\n"
       print(headstock(aetolus))
       for pitch = 1, #fingerboard do
         print(headstock(tuner(fingerboard[pitch])))
       end
-      print "\n"
+      print()
 
     else
 
-      local catalogue = {}
-      local itera = 1
-
-      for clave, data in pairs(axius) do
-        catalogue[itera] = clave
-        itera = itera + 1
-      end
-
-      catalogue[#catalogue + 1] = 'z0'
-
-      table.sort(catalogue)
-
-      print()
-
-      for carte = 1, #catalogue, 1 do
-        if (carte % 7 == 0) then
-          io.write(string.format("\t%s\n", catalogue[carte]))
-        else
-          io.write(string.format("\t%s", catalogue[carte]))
-        end
-      end
-
-      print()
+      print("\t" .. paeon .. " ?\n")
 
     end
 
