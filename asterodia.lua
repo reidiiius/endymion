@@ -19,7 +19,6 @@ PROTOGENEIA.Deucalion = function()
   table.sort(catalogue)
 
   print()
-
   for carte = 1, #catalogue, 1 do
     if (carte % 7 == 0) then
       io.write(string.format("\t%s\n", catalogue[carte]))
@@ -27,7 +26,6 @@ PROTOGENEIA.Deucalion = function()
       io.write(string.format("\t%s", catalogue[carte]))
     end
   end
-
   print()
 
 end
@@ -41,7 +39,9 @@ PROTOGENEIA.Eurycyda = function(paeon)
       local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
       local function peg(sign)
-        return string.sub(axius.n0, (sign + 1), -1) .. string.sub(axius.n0, 0, sign)
+        local head = string.sub(axius.n0, (sign + 1), -1)
+        local tail = string.sub(axius.n0, 0, sign)
+        return head .. tail
       end
 
       if stone == 'z0' then return string.rep(nyx, 12)
@@ -70,7 +70,9 @@ PROTOGENEIA.Eurycyda = function(paeon)
             50, 25,  0, 35, 10, 45, 20, 55, 30
 
       local function tuner(sign)
-        return string.sub(epeius, (sign + 1), -1) .. string.sub(epeius, 0, sign)
+        local head = string.sub(epeius, (sign + 1), -1)
+        local tail = string.sub(epeius, 0, sign)
+        return head .. tail
       end
 
       local function headstock(sign)
@@ -86,15 +88,11 @@ PROTOGENEIA.Eurycyda = function(paeon)
       print()
 
     else
-
       print("\t" .. paeon .. " ?\n")
-
     end
 
   else
-
     return nil
-
   end
 
 end
