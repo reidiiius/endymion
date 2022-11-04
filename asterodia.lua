@@ -4,12 +4,12 @@ local PROTOGENEIA = {}
 
 PROTOGENEIA.Deucalion = function()
 
-  local axius = setmetatable(require('olympiad'), {})
+  local bank = setmetatable(require('olympiad'), {})
 
   local catalogue = {}
   local itera = 1
 
-  for clave, data in pairs(axius) do
+  for clave, data in pairs(bank) do
     catalogue[itera] = clave
     itera = itera + 1
   end
@@ -30,66 +30,90 @@ PROTOGENEIA.Deucalion = function()
 
 end
 
-PROTOGENEIA.Eurycyda = function(paeon)
+PROTOGENEIA.Eurycyda = function(sign)
 
-  local axius = setmetatable(require('olympiad'), {
+  local bank = setmetatable(require('olympiad'), {
 
-    __index = function(axius, stone)
-
+    __index = function(bank, sign)
       local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
-      local function peg(ndx)
-        local head = string.sub(axius.n0, (ndx + 1), -1)
-        local tail = string.sub(axius.n0, 0, ndx)
+      local peg = function(ndx)
+        local head = string.sub(bank.n0, (ndx + 1), -1)
+        local tail = string.sub(bank.n0, 1, ndx)
+
         return head .. tail
       end
 
-      if stone == 'z0' then return string.rep(nyx, 12)
-      elseif stone == 'j367' then return peg(45)
-      elseif stone == 'j37' then return peg(10)
-      elseif stone == 'j7' then return peg(35)
-      elseif stone == 'n8' then return peg(0)
-      elseif stone == 'k4' then return peg(25)
-      elseif stone == 'k14' then return peg(50)
-      elseif stone == 'k145' then return peg(15)
+      if sign == 'z0' then return string.rep(nyx, 12)
+      elseif sign == 'j367' then return peg(45)
+      elseif sign == 'j37' then return peg(10)
+      elseif sign == 'j7' then return peg(35)
+      elseif sign == 'n8' then return peg(0)
+      elseif sign == 'k4' then return peg(25)
+      elseif sign == 'k14' then return peg(50)
+      elseif sign == 'k145' then return peg(15)
       else return nil
       end
 
     end
   })
 
-  if type(axius) == 'table' then
+  if type(bank) == 'table' then
 
-    if axius[paeon] then
+    if bank[sign] then
+      local record = bank[sign]
 
-      local epeius = axius[paeon]
+      local tuning = 'beadgcf'
 
-      local aetolus = paeon .. '-beadgcf-v' .. os.time()
+      local diadem = string.format("%s-%s-i%u", sign, tuning, os.time())
 
       local Bj, Fn, Cn, Gn, Dn, An, En, Bn, Fk =
             50, 25,  0, 35, 10, 45, 20, 55, 30
 
+      local gearbox = function(tuned)
+        if tuned == 'beadgcf' then
+          return {Fn, Cn, Gn, Dn, An, En, Bn}
+        elseif tuned == 'bfbfb' then
+          return {Bn, Fn, Bn, Fn, Bn}
+        elseif tuned == 'cgdae' then
+          return {En, An, Dn, Gn, Cn}
+        elseif tuned == 'eadgbe' then
+          return {En, Bn, Gn, Dn, An, En}
+        elseif tuned == 'fkbjdn' then
+          return {Dn, Bj, Fk, Dn, Bj, Fk}
+        else
+          return {Cn}
+        end
+      end
+
+      local headstock = gearbox(tuning)
+
       local function tuner(ndx)
-        local head = string.sub(epeius, (ndx + 1), -1)
-        local tail = string.sub(epeius, 0, ndx)
+        local head = string.sub(record, (ndx + 1), -1)
+        local tail = string.sub(record, 1, ndx)
+
         return head .. tail
       end
 
-      local function headstock(diadem)
-        return string.format("\t%s", diadem)
+      local function tabbed(str)
+        return string.format("\t%s", str)
       end
 
-      -- instrument tuning
-      local fingerboard = {Fn, Cn, Gn, Dn, An, En, Bn}
+      local function boards(header, stones)
+        print(tabbed(header))
+        for pitch = 1, #stones do
+          print(tabbed(tuner(stones[pitch])))
+        end
+        print()
 
-      print(headstock(aetolus))
-      for pitch = 1, #fingerboard do
-        print(headstock(tuner(fingerboard[pitch])))
+        return nil
       end
-      print()
 
+      boards(diadem, headstock)
     else
-      print("\t" .. paeon .. " ?\n")
+      local mistake = string.format("\t%s ?\n", sign)
+
+      print(mistake)
     end
 
   else
