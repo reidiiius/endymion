@@ -37,21 +37,31 @@ PROTOGENEIA.Eurycyda = function(sign)
     __index = function(bank, sign)
       local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
-      local peg = function(ndx)
-        local head = string.sub(bank.n0, (ndx + 1), -1)
-        local tail = string.sub(bank.n0, 1, ndx)
+      local peg = function(key, ndx)
+        local head = string.sub(bank[key], (ndx + 1), -1)
+        local tail = string.sub(bank[key], 1, ndx)
 
         return head .. tail
       end
 
       if sign == 'z0' then return string.rep(nyx, 12)
-      elseif sign == 'j367' then return peg(45)
-      elseif sign == 'j37' then return peg(10)
-      elseif sign == 'j7' then return peg(35)
-      elseif sign == 'n8' then return peg(0)
-      elseif sign == 'k4' then return peg(25)
-      elseif sign == 'k14' then return peg(50)
-      elseif sign == 'k145' then return peg(15)
+      elseif sign == 'j367' then return peg('n0', 45)
+      elseif sign == 'j37'  then return peg('n0', 10)
+      elseif sign == 'j7'   then return peg('n0', 35)
+      elseif sign == 'n8'   then return peg('n0',  0)
+      elseif sign == 'k4'   then return peg('n0', 25)
+      elseif sign == 'k14'  then return peg('n0', 50)
+      elseif sign == 'k145' then return peg('n0', 15)
+      -- altered
+      elseif sign == 'n45'  then return peg('j3', 20)
+      elseif sign == 'n124' then return peg('j3', 45)
+      elseif sign == 'j237' then return peg('j3', 10)
+      elseif sign == 'j67'  then return peg('j3', 35)
+      elseif sign == 'k4j7' then return peg('k1', 35)
+      elseif sign == 'k45'  then return peg('k1', 25)
+      elseif sign == 'k124' then return peg('k1', 50)
+      elseif sign == 'n237' then return peg('k1', 15)
+      elseif sign == 'n67'  then return peg('k1', 40)
       else return nil
       end
 
