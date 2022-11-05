@@ -45,6 +45,7 @@ PROTOGENEIA.Eurycyda = function(sign)
       end
 
       if sign == 'z0' then return string.rep(nyx, 12)
+      elseif sign == 'n145' then return peg('n0', 20)
       elseif sign == 'j367' then return peg('n0', 45)
       elseif sign == 'j37'  then return peg('n0', 10)
       elseif sign == 'j7'   then return peg('n0', 35)
@@ -52,6 +53,7 @@ PROTOGENEIA.Eurycyda = function(sign)
       elseif sign == 'k4'   then return peg('n0', 25)
       elseif sign == 'k14'  then return peg('n0', 50)
       elseif sign == 'k145' then return peg('n0', 15)
+      elseif sign == 'n367' then return peg('n0', 40)
       -- altered
       elseif sign == 'n45'  then return peg('j3', 20)
       elseif sign == 'n124' then return peg('j3', 45)
@@ -96,7 +98,7 @@ PROTOGENEIA.Eurycyda = function(sign)
         end
       end
 
-      local headstock = gearbox(tuning)
+      local stock = gearbox(tuning)
 
       local function tuner(ndx)
         local head = string.sub(record, (ndx + 1), -1)
@@ -109,7 +111,7 @@ PROTOGENEIA.Eurycyda = function(sign)
         return string.format("\t%s", str)
       end
 
-      local function boards(header, stones)
+      local function board(header, stones)
         print(tabbed(header))
         for pitch = 1, #stones do
           print(tabbed(tuner(stones[pitch])))
@@ -119,7 +121,7 @@ PROTOGENEIA.Eurycyda = function(sign)
         return nil
       end
 
-      boards(diadem, headstock)
+      board(diadem, stock)
     else
       local mistake = string.format("\t%s ?\n", sign)
 
