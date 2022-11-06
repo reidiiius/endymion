@@ -13,9 +13,7 @@ local function Selene()
       end
     end
   else
-    print(string.format(
-      "\n\t%s\n", "protogeneia is " .. type(protogeneia)
-    ))
+    error("protogeneia is type ".. type(protogeneia), 1)
   end
 
   return nil

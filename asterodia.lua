@@ -31,15 +31,21 @@ PROTOGENEIA.Deucalion = function()
 end
 
 PROTOGENEIA.Eurycyda = function(sign)
-
+  local span = 60
   local bank = setmetatable(require('olympiad'), {
 
     __index = function(bank, sign)
       local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
       local peg = function(key, ndx)
-        local head = string.sub(bank[key], (ndx + 1), -1)
-        local tail = string.sub(bank[key], 1, ndx)
+        local str = bank[key]
+
+        if (string.len(str) ~= span) then
+          error("string length not ".. span .." characters", 1)
+        end
+
+        local head = string.sub(str, (ndx + 1), -1)
+        local tail = string.sub(str, 1, ndx)
 
         return head .. tail
       end
@@ -74,6 +80,10 @@ PROTOGENEIA.Eurycyda = function(sign)
 
     if bank[sign] then
       local record = bank[sign]
+
+      if (string.len(record) ~= span) then
+        error("string length not ".. span .." characters", 1)
+      end
 
       local tuning = 'beadgcf'
 
