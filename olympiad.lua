@@ -1,6 +1,6 @@
 #!/usr/bin/env lua
 
-local AXIUS = {
+local Olympiad = {
   j2      = 'HgHg PuFe ____ ____ CuNp PbAu ____ AuPb ____ AgUr ____ FePu ',
   j2h     = 'HgCu PuMn ____ ____ CuHg PbFe ____ AuAg ____ AgAu ____ FePb ',
   j3      = 'HgSn ____ SnHg UrFe ____ PbAg ____ AuAu ____ AgPb ____ FeUr ',
@@ -100,5 +100,5 @@ local AXIUS = {
   k2j56l7 = 'NpCu ____ ____ FePu HgHg PuFe SnTi ____ CuNp PbAu ____ ____ ',
 }
 
-return AXIUS
+return Olympiad
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env lua
 
-local PROTOGENEIA = {}
+local Asterodia = {}
 
-PROTOGENEIA.Deucalion = function()
+Asterodia.Paeon = function()
 
   local bank = setmetatable(require('olympiad'), {})
 
@@ -28,9 +28,10 @@ PROTOGENEIA.Deucalion = function()
   end
   print()
 
+  return nil
 end
 
-PROTOGENEIA.Eurycyda = function(sign)
+Asterodia.Eurycyda = function(sign)
   local span = 60
   local bank = setmetatable(require('olympiad'), {
 
@@ -38,14 +39,18 @@ PROTOGENEIA.Eurycyda = function(sign)
       local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
       local peg = function(key, ndx)
-        local str = bank[key]
+        local rewire = bank[key]
 
-        if (string.len(str) ~= span) then
-          error("string length not ".. span .." characters", 1)
+        if type(rewire) ~= 'string' then
+          error("rewire is type ".. type(rewire), 1)
         end
 
-        local head = string.sub(str, (ndx + 1), -1)
-        local tail = string.sub(str, 1, ndx)
+        if string.len(rewire) ~= span then
+          error("rewire length not ".. span .." characters", 1)
+        end
+
+        local head = string.sub(rewire, (ndx + 1), -1)
+        local tail = string.sub(rewire, 1, ndx)
 
         return head .. tail
       end
@@ -81,8 +86,12 @@ PROTOGENEIA.Eurycyda = function(sign)
     if bank[sign] then
       local record = bank[sign]
 
-      if (string.len(record) ~= span) then
-        error("string length not ".. span .." characters", 1)
+      if type(record) ~= 'string' then
+        error("record is type ".. type(record), 1)
+      end
+
+      if string.len(record) ~= span then
+        error("record length not ".. span .." characters", 1)
       end
 
       local tuning = 'beadgcf'
@@ -139,10 +148,11 @@ PROTOGENEIA.Eurycyda = function(sign)
     end
 
   else
-    return nil
+    error("bank is type ".. type(bank), 1)
   end
 
+  return nil
 end
 
-return PROTOGENEIA
+return Asterodia
 
