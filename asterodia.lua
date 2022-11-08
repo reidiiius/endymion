@@ -4,19 +4,24 @@ local Asterodia = {}
 
 Asterodia.Naxos = function()
   local bank = require('olympiad')
-  local catalog = {}
-  local liter = 1
 
-  for clave, data in pairs(bank) do
-    catalog[liter] = clave
-    liter = liter + 1
+  if type(bank) == 'table' then
+    local catalog = {}
+    local liter = 1
+
+    for clef, data in pairs(bank) do
+      catalog[liter] = clef
+      liter = liter + 1
+    end
+
+    catalog[#catalog + 1] = 'z0'
+
+    table.sort(catalog)
+
+    return catalog
+  else
+    error("bank is type ".. type(bank), 1)
   end
-
-  catalog[#catalog + 1] = 'z0'
-
-  table.sort(catalog)
-
-  return catalog
 end
 
 Asterodia.Paeon = function(list)
@@ -132,6 +137,8 @@ Asterodia.Eurycyda = function(sign)
         local yarn = string.gsub(str, '(%u%l)', trans)
         local yarn = string.gsub(yarn, '____', '__')
 
+        assert(string.len(yarn) == 36, 'yarn length not 36 characters')
+
         return yarn
       end
 
@@ -166,13 +173,12 @@ Asterodia.Eurycyda = function(sign)
       local mistake = string.format("\t%s ?\n", sign)
 
       print(mistake)
+      return nil
     end
 
   else
     error("bank is type ".. type(bank), 1)
   end
-
-  return nil
 end
 
 return Asterodia

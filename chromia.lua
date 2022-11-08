@@ -4,9 +4,10 @@ local Chromia = {}
 
 Chromia.Aetolus = function(signs)
   local genus = require('asterodia')
-  local clefs = genus.Naxos()
 
   if type(genus) == 'table' then
+    local clefs = genus.Naxos()
+
     if not signs[1] then
       genus.Paeon(clefs)
     elseif signs[1] == 'gamut' then
