@@ -94,6 +94,8 @@ Asterodia.Eurycyda = function(sign)
         error("record length not ".. span .." characters", 1)
       end
 
+      local toggle = true
+
       local tuning = 'beadgcf'
 
       local diadem = string.format("%s-%s-i%u", sign, tuning, os.time())
@@ -119,11 +121,28 @@ Asterodia.Eurycyda = function(sign)
 
       local stock = gearbox(tuning)
 
+      local trans = {
+       Ag='s',Au='u',Cu='r',Fe='q',Hg='v',Mn='p',
+       Np='y',Pb='w',Pu='z',Sn='t',Ti='o',Ur='x',
+      }
+
+      local function morph(str)
+        local yarn = string.gsub(str, '(%u%l)', trans)
+        local yarn = string.gsub(yarn, '____', '__')
+
+        return yarn
+      end
+
       local function tuner(ndx)
         local head = string.sub(record, (ndx + 1), -1)
         local tail = string.sub(record, 1, ndx)
+        local rope = head .. tail
 
-        return head .. tail
+        if toggle then
+          return morph(rope)
+        else
+          return rope
+        end
       end
 
       local function tabbed(str)
