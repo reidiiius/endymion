@@ -2,28 +2,30 @@
 
 local Asterodia = {}
 
-Asterodia.Paeon = function()
-
-  local bank = setmetatable(require('olympiad'), {})
-
-  local catalogue = {}
-  local itera = 1
+Asterodia.Naxos = function()
+  local bank = require('olympiad')
+  local catalog = {}
+  local liter = 1
 
   for clave, data in pairs(bank) do
-    catalogue[itera] = clave
-    itera = itera + 1
+    catalog[liter] = clave
+    liter = liter + 1
   end
 
-  catalogue[#catalogue + 1] = 'z0'
+  catalog[#catalog + 1] = 'z0'
 
-  table.sort(catalogue)
+  table.sort(catalog)
 
+  return catalog
+end
+
+Asterodia.Paeon = function(list)
   print()
-  for carte = 1, #catalogue, 1 do
-    if (carte % 7 == 0) then
-      io.write(string.format("\t%s\n", catalogue[carte]))
+  for item = 1, #list, 1 do
+    if (item % 7 == 0) then
+      io.write(string.format("\t%s\n", list[item]))
     else
-      io.write(string.format("\t%s", catalogue[carte]))
+      io.write(string.format("\t%s", list[item]))
     end
   end
   print()

@@ -4,10 +4,16 @@ local Chromia = {}
 
 Chromia.Aetolus = function(signs)
   local genus = require('asterodia')
+  local clefs = genus.Naxos()
 
   if type(genus) == 'table' then
     if not signs[1] then
-      genus.Paeon()
+      genus.Paeon(clefs)
+    elseif signs[1] == 'gamut' then
+      print()
+      for liter = 1, #clefs do
+        genus.Eurycyda(clefs[liter])
+      end
     else
       print()
       for liter = 1, #signs do
@@ -21,7 +27,7 @@ Chromia.Aetolus = function(signs)
   return nil
 end
 
--- validates input
+-- validate input
 Chromia.Epeius = function(input)
   local base = require('olympiad')
 

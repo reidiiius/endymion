@@ -14,9 +14,17 @@ command-line
 
     cd endymion/
 
+:
+
     lua chromia.lua
 
+:
+
     lua chromia.lua n0 j3
+
+:
+
+    lua chromia.lua gamut
 
 ---
 
