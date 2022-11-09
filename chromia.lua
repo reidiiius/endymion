@@ -18,7 +18,7 @@ Chromia.Aetolus = function(signs)
     else
       print()
       for liter = 1, #signs do
-        genus.Eurycyda(tostring(signs[liter]))
+        genus.Eurycyda(signs[liter])
       end
     end
   else
@@ -43,16 +43,16 @@ Chromia.Epeius = function(input)
     if #input > items then
       print('Request denied!')
     else
-      local filtered = {}
+      local keychain = {}
 
       -- limit number of characters
       for liter = 1, #input do
         if string.len(input[liter]) < 9 then
-          table.insert(filtered, input[liter])
+          table.insert(keychain, input[liter])
         end
       end
 
-      Chromia.Aetolus(filtered)
+      Chromia.Aetolus(keychain)
     end
   else
     error("base is type ".. type(base), 1)

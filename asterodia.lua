@@ -8,18 +8,9 @@ local bank = setmetatable(require('olympiad'), {
     local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
     local peg = function(key, ndx)
-      local rewire = bank[key]
-
-      if type(rewire) ~= 'string' then
-        error("rewire is type ".. type(rewire), 1)
-      end
-
-      if string.len(rewire) ~= span then
-        error("rewire length not ".. span .." characters", 1)
-      end
-
-      local head = string.sub(rewire, (ndx + 1), -1)
-      local tail = string.sub(rewire, 1, ndx)
+      local wire = bank[key]
+      local head = string.sub(wire, (ndx + 1), -1)
+      local tail = string.sub(wire, 1, ndx)
 
       return head .. tail
     end
@@ -105,10 +96,10 @@ local function tabbed(str)
   return string.format("\t%s", str)
 end
 
-local function board(header, rewire)
+local function board(header, stream)
   print(tabbed(header))
   for pitch = 1, #stones do
-    print(tabbed(tuner(rewire, stones[pitch])))
+    print(tabbed(tuner(stream, stones[pitch])))
   end
   print()
 
@@ -118,24 +109,23 @@ end
 local cronus = os.time()
 
 Asterodia.Eurycyda = function(sign)
-  local span = 60
-
   if type(bank) == 'table' then
 
     if bank[sign] then
-      local record = bank[sign]
+      local cord = bank[sign]
+      local span = 60
 
-      if type(record) ~= 'string' then
-        error("record is type ".. type(record), 1)
+      if type(cord) ~= 'string' then
+        error("cord is type ".. type(cord), 1)
       end
 
-      if string.len(record) ~= span then
-        error("record length not ".. span .." characters", 1)
+      if string.len(cord) ~= span then
+        error("cord length not ".. span .." characters", 1)
       end
 
-      local diadem = string.format("%s-%s-i%u", sign, tuning, cronus)
+      local band = string.format("%s-%s-i%u", sign, tuning, cronus)
 
-      board(diadem, record)
+      board(band, cord)
     else
       local mistake = string.format("\t%s ?\n", sign)
 
