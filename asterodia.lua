@@ -139,13 +139,13 @@ Asterodia.Eurycyda = function(sign)
 end
 
 Asterodia.Naxos = function()
-  local bank = require('olympiad')
+  local base = require('olympiad')
 
-  if type(bank) == 'table' then
+  if type(base) == 'table' then
     local catalog = {}
     local liter = 1
 
-    for clef, data in pairs(bank) do
+    for clef, data in pairs(base) do
       catalog[liter] = clef
       liter = liter + 1
     end
@@ -156,7 +156,7 @@ Asterodia.Naxos = function()
 
     return catalog
   else
-    error("bank is type ".. type(bank), 1)
+    error("base is type ".. type(base), 1)
   end
 end
 
