@@ -69,7 +69,7 @@ local trans = {
  Np='y',Pb='w',Pu='z',Sn='t',Ti='o',Ur='x',
 }
 
-local function morph(str)
+Asterodia.morph = function(str)
   local yarn;
   yarn = string.gsub(str, '(%u%l)', trans)
   yarn = string.gsub(yarn, '____', '__')
@@ -78,15 +78,15 @@ local function morph(str)
   return yarn
 end
 
-local toggle = true
+Asterodia.toggle = true
 
 local function tuner(str, ndx)
   local head = string.sub(str, (ndx + 1), -1)
   local tail = string.sub(str, 1, ndx)
   local rope = head .. tail
 
-  if toggle then
-    return morph(rope)
+  if Asterodia.toggle then
+    return Asterodia.morph(rope)
   else
     return rope
   end

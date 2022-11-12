@@ -20,11 +20,23 @@ command-line
 
 :
 
+    lua chromia.lua group yq
+
+:
+
+    lua chromia.lua query ^%a%dh?$
+
+:
+
     lua chromia.lua n0 j3
 
 :
 
     lua chromia.lua gamut
+
+:
+
+    lua chromia.lua help
 
 ---
 
