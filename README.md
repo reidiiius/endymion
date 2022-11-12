@@ -34,7 +34,7 @@ Command-line
 
     lua chromia.lua n0 j3
 
-- Tunings: beadgcf bfbfb cgdae eadgbe fkbjdn
+Tunings: beadgcf bfbfb cgdae eadgbe fkbjdn
 
     lua chromia.lua eadgbe n0 j3
 
