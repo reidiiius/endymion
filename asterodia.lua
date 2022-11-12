@@ -44,25 +44,33 @@ local bank = setmetatable(require('olympiad'), {
 local Bj, Fn, Cn, Gn, Dn, An, En, Bn, Fk =
       50, 25,  0, 35, 10, 45, 20, 55, 30
 
-local gearbox = function(tuned)
+Asterodia.stocks = {
+  'beadgcf', 'bfbfb', 'cgdae', 'eadgbe', 'fkbjdn'
+}
+
+Asterodia.gearbox = function(tuned)
+  local rocks = {}
+
   if tuned == 'beadgcf' then
-    return {Fn, Cn, Gn, Dn, An, En, Bn}
+    rocks = {Fn, Cn, Gn, Dn, An, En, Bn}
   elseif tuned == 'bfbfb' then
-    return {Bn, Fn, Bn, Fn, Bn}
+    rocks = {Bn, Fn, Bn, Fn, Bn}
   elseif tuned == 'cgdae' then
-    return {En, An, Dn, Gn, Cn}
+    rocks = {En, An, Dn, Gn, Cn}
   elseif tuned == 'eadgbe' then
-    return {En, Bn, Gn, Dn, An, En}
+    rocks = {En, Bn, Gn, Dn, An, En}
   elseif tuned == 'fkbjdn' then
-    return {Dn, Bj, Fk, Dn, Bj, Fk}
+    rocks = {Dn, Bj, Fk, Dn, Bj, Fk}
   else
-    return {Cn}
+    rocks = {Cn}
   end
+
+  return rocks
 end
 
-local tuning = 'beadgcf'
+Asterodia.tuning = 'beadgcf' -- default
 
-local stones = gearbox(tuning)
+Asterodia.stones = Asterodia.gearbox(Asterodia.tuning)
 
 local trans = {
  Ag='s',Au='u',Cu='r',Fe='q',Hg='v',Mn='p',
@@ -98,8 +106,8 @@ end
 
 local function board(header, stream)
   print(tabbed(header))
-  for pitch = 1, #stones do
-    print(tabbed(tuner(stream, stones[pitch])))
+  for pitch = 1, #Asterodia.stones do
+    print(tabbed(tuner(stream, Asterodia.stones[pitch])))
   end
   print()
 
@@ -123,7 +131,7 @@ Asterodia.Eurycyda = function(sign)
         error("cord length not ".. span .." characters", 1)
       end
 
-      local band = string.format("%s-%s-i%u", sign, tuning, cronus)
+      local band = string.format("%s-%s-i%u", sign, Asterodia.tuning, cronus)
 
       board(band, cord)
     else

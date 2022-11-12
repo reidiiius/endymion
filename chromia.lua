@@ -18,12 +18,19 @@ Chromia.Aetolus = function(signs)
     elseif signs[1] == 'help' then
       local press = string.format("%s %s", arg[-1], arg[0])
 
-      io.write(string.format("\n\t%s\n\n", press))
-      io.write(string.format("\t%s %s\n\n", press, 'group yq'))
+      io.write("\nUsage:\n")
+      io.write(string.format("\t%s %s\n\n", press, 'help'))
+      io.write(string.format("\t%s\n\n", press))
+      io.write(string.format("\t%s %s %s\n\n", press, 'group', 'yq'))
       io.write(string.format("\t%s %s %s\n\n", press, 'query', '^%a%dh?$'))
       io.write(string.format("\t%s %s\n\n", press, 'n0 j3'))
-      io.write(string.format("\t%s %s\n\n", press, 'gamut'))
-      io.write(string.format("\t%s %s\n\n", press, 'help'))
+      io.write("  Tunings:")
+      for liter = 1, #genus.stocks do
+        io.write(string.format(" %s", genus.stocks[liter]))
+      end
+      io.write("\n\n")
+      io.write(string.format("\t%s %s %s\n\n", press, 'eadgbe', 'n0 j3'))
+      io.write(string.format("\t%s %s %s\n\n", press, 'cgdae', 'gamut'))
     elseif signs[1] == 'query' and signs[2] then
       local similar = {}
 
@@ -58,6 +65,32 @@ Chromia.Aetolus = function(signs)
         if #similar % 7 ~= 0 then print() end
       else
         io.write(string.format("\n\t%s ?\n\n", signs[2]))
+      end
+    elseif string.match(signs[1], '^[a-g]+[j-n]?') and signs[2] then
+      for liter = 1, #genus.stocks do
+        if string.match(signs[1], genus.stocks[liter]) then
+          genus.tuning = signs[1]
+          genus.stones = genus.gearbox(genus.tuning)
+          break
+        end
+      end
+
+      if rawequal(genus.tuning, signs[1]) then
+        table.remove(signs, 1)
+        -- signs[2] shifts to signs[1]
+        if rawequal('gamut', signs[1]) then
+          print()
+          for liter = 1, #clefs do
+            genus.Eurycyda(clefs[liter])
+          end
+        else
+          print()
+          for liter = 1, #signs do
+            genus.Eurycyda(signs[liter])
+          end
+        end
+      else
+        io.write(string.format("\n\t%s ?\n\n", signs[1]))
       end
     else
       print()

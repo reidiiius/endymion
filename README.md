@@ -10,9 +10,13 @@ Selenography
 ---
 
 ### Usage
-command-line
+Command-line
 
     cd endymion/
+
+:
+
+    lua chromia.lua help
 
 :
 
@@ -30,13 +34,13 @@ command-line
 
     lua chromia.lua n0 j3
 
+- Tunings: beadgcf bfbfb cgdae eadgbe fkbjdn
+
+    lua chromia.lua eadgbe n0 j3
+
 :
 
-    lua chromia.lua gamut
-
-:
-
-    lua chromia.lua help
+    lua chromia.lua cgdae gamut | sensible-pager
 
 ---
 
