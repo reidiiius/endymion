@@ -2,6 +2,11 @@
 
 local Chromia = {}
 
+local function question(sign)
+  io.write(string.format("\n\t%s ?\n\n", sign))
+  return nil
+end
+
 local function helper(genus)
   local press = string.format("%s %s", arg[-1], arg[0])
 
@@ -65,6 +70,26 @@ local function machine(genus, sign)
   return nil
 end
 
+local function weaver(genus, list)
+  print()
+  for liter = 1, #list do
+    genus.Eurycyda(list[liter])
+  end
+
+  return nil
+end
+
+local function layout(refun, list, numb, sign)
+  if #list > 0 then
+    refun(list)
+    if #list % numb ~= 0 then print() end
+  else
+    question(sign)
+  end
+
+  return nil
+end
+
 Chromia.Aetolus = function(signs)
   local genus = require('asterodia')
   local columns = 7
@@ -76,55 +101,33 @@ Chromia.Aetolus = function(signs)
       genus.Paeon(clefs)
       if #clefs % columns ~= 0 then print() end
     elseif signs[1] == 'gamut' then
-      print()
-      for liter = 1, #clefs do
-        genus.Eurycyda(clefs[liter])
-      end
+      weaver(genus, clefs)
     elseif signs[1] == 'help' then
       helper(genus)
     elseif signs[1] == 'query' and signs[2] then
       local similar = querier(clefs, signs[2])
 
-      if #similar > 0 then
-        genus.Paeon(similar)
-        if #similar % columns ~= 0 then print() end
-      else
-        io.write(string.format("\n\t%s ?\n\n", signs[2]))
-      end
+      layout(genus.Paeon, similar, columns, signs[2])
     elseif signs[1] == 'group' and signs[2] then
       local similar = grouper(genus, signs[2])
 
-      if #similar > 0 then
-        genus.Paeon(similar)
-        if #similar % columns ~= 0 then print() end
-      else
-        io.write(string.format("\n\t%s ?\n\n", signs[2]))
-      end
+      layout(genus.Paeon, similar, columns, signs[2])
     elseif string.match(signs[1], '^[a-g]+[j-n]?') and signs[2] then
       machine(genus, signs[1]) -- stones setter
 
       if rawequal(genus.tuning, signs[1]) then
-        table.remove(signs, 1)
-        -- signs[2] shifts to signs[1]
+        table.remove(signs, 1) -- signs[2] shifts to signs[1]
+
         if rawequal('gamut', signs[1]) then
-          print()
-          for liter = 1, #clefs do
-            genus.Eurycyda(clefs[liter])
-          end
+          weaver(genus, clefs)
         else
-          print()
-          for liter = 1, #signs do
-            genus.Eurycyda(signs[liter])
-          end
+          weaver(genus, signs)
         end
       else
-        io.write(string.format("\n\t%s ?\n\n", signs[1]))
+        question(signs[1])
       end
     else
-      print()
-      for liter = 1, #signs do
-        genus.Eurycyda(signs[liter])
-      end
+      weaver(genus, signs)
     end
   else
     error("genus is type ".. type(genus), 1)
