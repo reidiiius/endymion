@@ -41,8 +41,8 @@ local bank = setmetatable(require('olympiad'), {
   end
 })
 
-local Bj, Fn, Cn, Gn, Dn, An, En, Bn, Fk =
-      50, 25,  0, 35, 10, 45, 20, 55, 30
+local Cn, Ck, Dj, Dn, Dk, Ej, En, Fn, Fk, Gj, Gn, Gk, Aj, An, Ak, Bj, Bn =
+       0,  5,  5, 10, 15, 15, 20, 25, 30, 30, 35, 40, 40, 45, 50, 50, 55
 
 Asterodia.stocks = {
   'beadgcf', 'bfbfb', 'cgdae', 'eadgbe', 'fkbjdn'

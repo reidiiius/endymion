@@ -2,78 +2,106 @@
 
 local Chromia = {}
 
+local function helper(genus)
+  local press = string.format("%s %s", arg[-1], arg[0])
+
+  io.write("\nUsage:\n")
+  io.write(string.format("\t%s %s\n\n", press, 'help'))
+  io.write(string.format("\t%s\n\n", press))
+  io.write(string.format("\t%s %s %s\n\n", press, 'group', 'yq'))
+  io.write(string.format("\t%s %s %s\n\n", press, 'query', '^%a%dh?$'))
+  io.write(string.format("\t%s %s\n\n", press, 'n0 j3'))
+  io.write("  Tunings:")
+  for liter = 1, #genus.stocks do
+    io.write(string.format(" %s", genus.stocks[liter]))
+  end
+  io.write("\n\n")
+  io.write(string.format("\t%s %s %s\n\n", press, 'eadgbe', 'n0 j3'))
+  io.write(string.format("\t%s %s %s\n\n", press, 'cgdae', 'gamut'))
+  return nil
+end
+
+local function querier(clefs, sign)
+  local similar = {}
+
+  for liter = 1, #clefs do
+    if string.match(clefs[liter], sign) then
+      table.insert(similar, clefs[liter])
+    end
+  end
+
+  return similar
+end
+
+local function grouper(genus, sign)
+  local base = require('olympiad')
+  local yarn, similar = type(nil), {}
+
+  for clef, wire in pairs(base) do
+    if genus.toggle then
+      yarn = genus.morph(wire)
+    else
+      yarn = wire
+    end
+
+    if string.match(yarn, sign) then
+      table.insert(similar, clef)
+    end
+  end
+
+  table.sort(similar)
+  return similar
+end
+
+local function machine(genus, sign)
+  for liter = 1, #genus.stocks do
+    if string.match(sign, genus.stocks[liter]) then
+      genus.tuning = sign
+      genus.stones = genus.gearbox(genus.tuning)
+      break
+    end
+  end
+
+  return nil
+end
+
 Chromia.Aetolus = function(signs)
   local genus = require('asterodia')
+  local columns = 7
 
   if type(genus) == 'table' then
     local clefs = genus.Naxos()
 
     if not signs[1] then
       genus.Paeon(clefs)
+      if #clefs % columns ~= 0 then print() end
     elseif signs[1] == 'gamut' then
       print()
       for liter = 1, #clefs do
         genus.Eurycyda(clefs[liter])
       end
     elseif signs[1] == 'help' then
-      local press = string.format("%s %s", arg[-1], arg[0])
-
-      io.write("\nUsage:\n")
-      io.write(string.format("\t%s %s\n\n", press, 'help'))
-      io.write(string.format("\t%s\n\n", press))
-      io.write(string.format("\t%s %s %s\n\n", press, 'group', 'yq'))
-      io.write(string.format("\t%s %s %s\n\n", press, 'query', '^%a%dh?$'))
-      io.write(string.format("\t%s %s\n\n", press, 'n0 j3'))
-      io.write("  Tunings:")
-      for liter = 1, #genus.stocks do
-        io.write(string.format(" %s", genus.stocks[liter]))
-      end
-      io.write("\n\n")
-      io.write(string.format("\t%s %s %s\n\n", press, 'eadgbe', 'n0 j3'))
-      io.write(string.format("\t%s %s %s\n\n", press, 'cgdae', 'gamut'))
+      helper(genus)
     elseif signs[1] == 'query' and signs[2] then
-      local similar = {}
-
-      for liter = 1, #clefs do
-        if string.match(clefs[liter], signs[2]) then
-          table.insert(similar, clefs[liter])
-        end
-      end
-      genus.Paeon(similar)
-      if #similar % 7 ~= 0 then print() end
-    elseif signs[1] == 'group' and signs[2] then
-      local base = require('olympiad')
-
-      local yarn = ''
-      local similar = {}
-
-      for clef, wire in pairs(base) do
-        if genus.toggle then
-          yarn = genus.morph(wire)
-        else
-          yarn = wire
-        end
-
-        if string.match(yarn, signs[2]) then
-          table.insert(similar, clef)
-        end
-      end
+      local similar = querier(clefs, signs[2])
 
       if #similar > 0 then
-        table.sort(similar)
         genus.Paeon(similar)
-        if #similar % 7 ~= 0 then print() end
+        if #similar % columns ~= 0 then print() end
+      else
+        io.write(string.format("\n\t%s ?\n\n", signs[2]))
+      end
+    elseif signs[1] == 'group' and signs[2] then
+      local similar = grouper(genus, signs[2])
+
+      if #similar > 0 then
+        genus.Paeon(similar)
+        if #similar % columns ~= 0 then print() end
       else
         io.write(string.format("\n\t%s ?\n\n", signs[2]))
       end
     elseif string.match(signs[1], '^[a-g]+[j-n]?') and signs[2] then
-      for liter = 1, #genus.stocks do
-        if string.match(signs[1], genus.stocks[liter]) then
-          genus.tuning = signs[1]
-          genus.stones = genus.gearbox(genus.tuning)
-          break
-        end
-      end
+      machine(genus, signs[1]) -- stones setter
 
       if rawequal(genus.tuning, signs[1]) then
         table.remove(signs, 1)
