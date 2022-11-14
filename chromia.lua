@@ -2,27 +2,32 @@
 
 local Chromia = {}
 
+local function scribe(style, ...)
+  io.write(string.format(style, ...))
+  return nil
+end
+
 local function question(sign)
-  io.write(string.format("\n\t%s ?\n\n", sign))
+  scribe('\n\t%s ?\n\n', sign)
   return nil
 end
 
 local function helper(genus)
-  local press = string.format("%s %s", arg[-1], arg[0])
+  local cmd = string.format("%s %s", arg[-1], arg[0])
 
-  io.write("\nUsage:\n")
-  io.write(string.format("\t%s %s\n\n", press, 'help'))
-  io.write(string.format("\t%s\n\n", press))
-  io.write(string.format("\t%s %s %s\n\n", press, 'group', 'yq'))
-  io.write(string.format("\t%s %s %s\n\n", press, 'query', '^%a%dh?$'))
-  io.write(string.format("\t%s %s\n\n", press, 'n0 j3'))
-  io.write("  Tunings:")
+  scribe('\n%s\n', 'Usage:')
+  scribe('\t%s %s\n\n', cmd, 'help')
+  scribe('\t%s\n\n', cmd)
+  scribe('\t%s %s %s\n\n', cmd, 'group', 'yq')
+  scribe('\t%s %s %s\n\n', cmd, 'query', '^%a%dh?$')
+  scribe('\t%s %s\n\n', cmd, 'n0 j3')
+  io.write('  Tunings:')
   for liter = 1, #genus.stocks do
     io.write(string.format(" %s", genus.stocks[liter]))
   end
   io.write("\n\n")
-  io.write(string.format("\t%s %s %s\n\n", press, 'eadgbe', 'n0 j3'))
-  io.write(string.format("\t%s %s %s\n\n", press, 'cgdae', 'gamut'))
+  scribe('\t%s %s %s\n\n', cmd, 'eadgbe', 'n0 j3')
+  scribe('\t%s %s %s\n\n', cmd, 'cgdae', 'gamut')
   return nil
 end
 
