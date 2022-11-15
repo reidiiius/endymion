@@ -174,8 +174,5 @@ Chromia.Epeius = function(input)
   return nil
 end
 
-local okay, errs = pcall(Chromia.Epeius, arg)
-if not okay then print(errs) end
-
-collectgarbage('collect')
+return Chromia
 
