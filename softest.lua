@@ -14,7 +14,7 @@ local process = function(name, okay, errs)
     scribe("%s success [%u] %s\n", name, tested, okay)
     passed = passed + 1
   else
-    scribe("failure [%u] %s\n", tested, errs)
+    scribe("%s failure [%u] %s\n", name, tested, errs)
     failed = failed + 1
   end
 end
