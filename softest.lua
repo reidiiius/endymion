@@ -2,107 +2,99 @@
 
 local Softest = {}
 
-Softest.Chromia = require('chromia')
+local scribe = function(style, ...)
+  io.write(string.format(style, ...))
+  return nil
+end
 
 local tested, passed, failed = 0, 0, 0
 
-Softest.runway = function()
-  local okay, errs = false, type(nil)
-
-  -- test 1
-  okay, errs = pcall(Softest.Chromia.Epeius, {'gamut'})
-  tested = tested + 1
+local process = function(name, okay, errs)
   if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
+    scribe("%s success [%u] %s\n", name, tested, okay)
     passed = passed + 1
   else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
+    scribe("failure [%u] %s\n", tested, errs)
     failed = failed + 1
   end
+end
 
-  -- test 2
-  okay, errs = pcall(Softest.Chromia.Epeius, {'fkbjdn', 'gamut'})
-  tested = tested + 1
-  if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
-    passed = passed + 1
-  else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
-    failed = failed + 1
-  end
+Softest.report = function()
+  local style = "\n\tTested: %u, Passed: %u, Failed: %u\n\n"
 
-  -- test 3
-  okay, errs = pcall(Softest.Chromia.Epeius, {'help'})
-  tested = tested + 1
-  if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
-    passed = passed + 1
-  else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
-    failed = failed + 1
-  end
+  scribe(style, tested, passed, failed)
+  return nil
+end
 
-  -- test 4
-  okay, errs = pcall(Softest.Chromia.Epeius, {nil})
-  tested = tested + 1
-  if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
-    passed = passed + 1
-  else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
-    failed = failed + 1
-  end
+Softest.epeius = function()
+  local name, okay, errs = 'epeius', false, type(nil)
+  local refun = require('chromia')
+  local values = {
+    {'gamut'},
+    {'fkbjdn', 'gamut'},
+    {'help'},
+    {nil},
+    {'group', 'yq'},
+    {'group', 'what'},
+    {'query', '^%a%dh?$'},
+    {'query', 'which'},
+    {'n0', 'k9', 'k4j7'},
+    {'eadgbe', 'n0', 'j8', 'z0'},
+  }
 
-  -- test 5
-  okay, errs = pcall(Softest.Chromia.Epeius, {'group', 'yq'})
-  tested = tested + 1
-  if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
-    passed = passed + 1
-  else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
-    failed = failed + 1
-  end
-
-  -- test 6
-  okay, errs = pcall(Softest.Chromia.Epeius, {'query', '^%a%dh?$'})
-  tested = tested + 1
-  if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
-    passed = passed + 1
-  else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
-    failed = failed + 1
-  end
-
-  -- test 7
-  okay, errs = pcall(Softest.Chromia.Epeius, {'n0', 'k9', 'z0'})
-  tested = tested + 1
-  if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
-    passed = passed + 1
-  else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
-    failed = failed + 1
-  end
-
-  -- test 8
-  okay, errs = pcall(Softest.Chromia.Epeius, {'eadgbe', 'n0', 'k9', 'z0'})
-  tested = tested + 1
-  if okay then
-    io.write(string.format("success [%u] %s\n", tested, okay))
-    passed = passed + 1
-  else
-    io.write(string.format("failure [%u] %s\n", tested, errs))
-    failed = failed + 1
+  for liter = 1, #values do
+    okay, errs = pcall(refun.Epeius, values[liter])
+    tested = tested + 1
+    process(name, okay, errs)
+    liter = liter + 1
   end
 
   return nil
 end
 
-Softest.runway()
+Softest.aetolus = function()
+  local name, okay, errs = 'aetolus', false, type(nil)
+  local refun = require('chromia')
+  local values = {
+    {'gamut'},
+    {'fkbjdn', 'gamut'},
+    {'help'},
+    {nil},
+    {'group', 'yq'},
+    {'group', 'what'},
+    {'query', '^%a%dh?$'},
+    {'query', 'which'},
+    {'n0', 'k9', 'k4j7'},
+    {'eadgbe', 'n0', 'j8', 'z0'},
+  }
 
-io.write(string.format(
-  "\n\tTested: %u, Passed: %u, Failed: %u\n\n", tested, passed, failed))
+  for liter = 1, #values do
+    okay, errs = pcall(refun.Aetolus, values[liter])
+    tested = tested + 1
+    process(name, okay, errs)
+    liter = liter + 1
+  end
 
+  return nil
+end
+
+do
+  local okay, errs = pcall(Softest.epeius, nil)
+
+  if not okay then
+    scribe("\n\tepeius: %s\n\n", errs)
+    return nil
+  end
+end
+
+do
+  local okay, errs = pcall(Softest.aetolus, nil)
+
+  if not okay then
+    scribe("\n\taetolus: %s\n\n", errs)
+    return nil
+  end
+end
+
+Softest.report()
 
