@@ -164,7 +164,8 @@ end
 Softest.morph = function()
   local name, okay, errs = 'morph', false, type(nil)
   local refun = require('asterodia')
-  local value = 'HgCu ____ SnSn ____ CuHg PbFe ____ AuAg ____ AgAu ____ FePb '
+  local lyres = require('olympiad')
+  local value = lyres.n0
 
   okay, errs = pcall(refun.morph, value)
   tested = tested + 1
@@ -204,7 +205,23 @@ Softest.gearbox = function()
   return nil
 end
 
-scribe('\n\t\t%s\n', 'Chromia test')
+Softest.olympiad = function()
+  local name, okay, errs = 'olympiad', false, type(nil)
+  local lyres = require('olympiad')
+  local numb = 0
+
+  for clef, value in pairs(lyres) do
+    desc = string.format("  %s: %s  \t", name, clef)
+    numb = numb + 1
+    okay, errs = pcall(assert, string.len(value) == 60)
+    tested = tested + 1
+    process(desc, numb, okay, errs)
+  end
+
+  return nil
+end
+
+scribe('\n\n\t\t%s\n\n', string.upper('Chromia test'))
 
 local Chromia_test = {
    epeius = Softest.epeius,
@@ -213,7 +230,7 @@ local Chromia_test = {
 
 Softest.dispatch(Chromia_test)
 
-scribe('\n\t\t%s\n', 'Asterodia test')
+scribe('\n\n\t\t%s\n\n', string.upper('Asterodia test'))
 
 local Asterodia_test = {
   eurycyda = Softest.eurycyda,
@@ -225,7 +242,15 @@ local Asterodia_test = {
    gearbox = Softest.gearbox,
 }
 
-Softest.dispatch(Asterodia_test )
+Softest.dispatch(Asterodia_test)
+
+scribe('\n\n\t\t%s\n\n', string.upper('Olympiad test'))
+
+local Olympiad_test = {
+  olympiad = Softest.olympiad,
+}
+
+Softest.dispatch(Olympiad_test)
 
 Softest.report()
 
