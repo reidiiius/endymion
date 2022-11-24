@@ -46,7 +46,8 @@ Softest.report = function()
 end
 
 Softest.epeius = function()
-  local name, okay, errs = 'epeius', false, type(nil)
+  local okay, errs
+  local name = 'epeius'
   local refun = require('chromia')
   local inputs = {{nil}, {'j3k56m4h'}}
   local maxine = {}
@@ -65,14 +66,14 @@ Softest.epeius = function()
     okay, errs = pcall(refun.Epeius, inputs[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
-    liter = liter + 1
   end
 
   return nil
 end
 
 Softest.aetolus = function()
-  local name, okay, errs = 'aetolus', false, type(nil)
+  local okay, errs
+  local name = 'aetolus'
   local refun = require('chromia')
   local values = {
     {'gamut'},
@@ -91,14 +92,14 @@ Softest.aetolus = function()
     okay, errs = pcall(refun.Aetolus, values[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
-    liter = liter + 1
   end
 
   return nil
 end
 
 Softest.eurycyda = function()
-  local name, okay, errs = 'eurycyda', false, type(nil)
+  local okay, errs
+  local name = 'eurycyda'
   local refun = require('asterodia')
   local inputs = {nil, 'k9', 'n0', 'j367', 'z0'}
 
@@ -107,14 +108,14 @@ Softest.eurycyda = function()
     okay, errs = pcall(refun.Eurycyda, inputs[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
-    liter = liter + 1
   end
 
   return nil
 end
 
 Softest.naxos = function()
-  local name, okay, errs = 'naxos', false, type(nil)
+  local okay, errs
+  local name = 'naxos'
   local refun = require('asterodia')
 
   okay, errs = pcall(refun.Naxos, nil)
@@ -137,7 +138,8 @@ Softest.naxos = function()
 end
 
 Softest.paeon = function()
-  local name, okay, errs = 'paeon', false, type(nil)
+  local okay, errs
+  local name = 'paeon'
   local refun = require('asterodia')
   local list = refun.Naxos()
 
@@ -149,7 +151,8 @@ Softest.paeon = function()
 end
 
 Softest.toggle = function()
-  local name, okay, errs = 'toggle', false, type(nil)
+  local okay, errs
+  local name = 'toggle'
   local refun = require('asterodia')
   local value = refun.toggle
   local boole = rawequal(type(value), 'boolean')
@@ -162,7 +165,8 @@ Softest.toggle = function()
 end
 
 Softest.morph = function()
-  local name, okay, errs = 'morph', false, type(nil)
+  local okay, errs
+  local name = 'morph'
   local refun = require('asterodia')
   local lyres = require('olympiad')
   local value = lyres.n0
@@ -175,7 +179,8 @@ Softest.morph = function()
 end
 
 Softest.stones = function()
-  local name, okay, errs = 'stones', false, type(nil)
+  local okay, errs
+  local name = 'stones'
   local refun = require('asterodia')
   local tuned = refun.tuning
   local value = refun.gearbox(tuned)
@@ -189,7 +194,8 @@ Softest.stones = function()
 end
 
 Softest.gearbox = function()
-  local name, okay, errs = 'gearbox', false, type(nil)
+  local okay, errs
+  local name = 'gearbox'
   local refun = require('asterodia')
   local values = refun.stocks
 
@@ -199,14 +205,14 @@ Softest.gearbox = function()
     okay, errs = pcall(refun.gearbox, values[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
-    liter = liter + 1
   end
 
   return nil
 end
 
 Softest.olympiad = function()
-  local name, okay, errs = 'olympiad', false, type(nil)
+  local desc, okay, errs
+  local name = 'olympiad'
   local lyres = require('olympiad')
   local numb = 0
 

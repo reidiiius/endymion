@@ -43,9 +43,10 @@ local function querier(clefs, sign)
   return similar
 end
 
-local function grouper(genus, sign)
+local function grouper(genus, graph)
   local base = require('olympiad')
-  local yarn, similar = type(nil), {}
+  local similar = {}
+  local yarn
 
   for clef, wire in pairs(base) do
     if genus.toggle then
@@ -54,7 +55,7 @@ local function grouper(genus, sign)
       yarn = wire
     end
 
-    if string.match(yarn, sign) then
+    if string.match(yarn, graph) then
       table.insert(similar, clef)
     end
   end
@@ -148,7 +149,7 @@ Chromia.Epeius = function(input)
   if type(base) == 'table' then
     local items = 0
 
-    for entry in pairs(base) do
+    for _ in pairs(base) do
       items = items + 1
     end
 

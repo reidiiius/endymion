@@ -7,7 +7,7 @@ local bank = setmetatable(require('olympiad'), {
   __index = function(bank, sign)
     local nyx = string.rep(string.char(95), 4) .. string.char(32)
 
-    local peg = function(key, ndx)
+    local tune = function(key, ndx)
       local wire = bank[key]
       local head = string.sub(wire, (ndx + 1), -1)
       local tail = string.sub(wire, 1, ndx)
@@ -16,56 +16,64 @@ local bank = setmetatable(require('olympiad'), {
     end
 
     if sign == 'z0' then return string.rep(nyx, 12)
-    elseif sign == 'n145' then return peg('n0', 20)
-    elseif sign == 'j367' then return peg('n0', 45)
-    elseif sign == 'j37'  then return peg('n0', 10)
-    elseif sign == 'j7'   then return peg('n0', 35)
-    elseif sign == 'n8'   then return peg('n0',  0)
-    elseif sign == 'k4'   then return peg('n0', 25)
-    elseif sign == 'k14'  then return peg('n0', 50)
-    elseif sign == 'k145' then return peg('n0', 15)
-    elseif sign == 'n367' then return peg('n0', 40)
+    elseif sign == 'n145' then return tune('n0', 20)
+    elseif sign == 'j367' then return tune('n0', 45)
+    elseif sign == 'j37'  then return tune('n0', 10)
+    elseif sign == 'j7'   then return tune('n0', 35)
+    elseif sign == 'n8'   then return tune('n0',  0)
+    elseif sign == 'k4'   then return tune('n0', 25)
+    elseif sign == 'k14'  then return tune('n0', 50)
+    elseif sign == 'k145' then return tune('n0', 15)
+    elseif sign == 'n367' then return tune('n0', 40)
     -- altered
-    elseif sign == 'n45'  then return peg('j3', 20)
-    elseif sign == 'n124' then return peg('j3', 45)
-    elseif sign == 'j237' then return peg('j3', 10)
-    elseif sign == 'j67'  then return peg('j3', 35)
-    elseif sign == 'k4j7' then return peg('k1', 35)
-    elseif sign == 'k45'  then return peg('k1', 25)
-    elseif sign == 'k124' then return peg('k1', 50)
-    elseif sign == 'n237' then return peg('k1', 15)
-    elseif sign == 'n67'  then return peg('k1', 40)
+    elseif sign == 'n45'  then return tune('j3', 20)
+    elseif sign == 'n124' then return tune('j3', 45)
+    elseif sign == 'j237' then return tune('j3', 10)
+    elseif sign == 'j67'  then return tune('j3', 35)
+    elseif sign == 'k4j7' then return tune('k1', 35)
+    elseif sign == 'k45'  then return tune('k1', 25)
+    elseif sign == 'k124' then return tune('k1', 50)
+    elseif sign == 'n237' then return tune('k1', 15)
+    elseif sign == 'n67'  then return tune('k1', 40)
     else return nil
     end
 
   end
 })
 
-local Cn, Ck, Dj, Dn, Dk, Ej, En, Fn, Fk, Gj, Gn, Gk, Aj, An, Ak, Bj, Bn =
-       0,  5,  5, 10, 15, 15, 20, 25, 30, 30, 35, 40, 40, 45, 50, 50, 55
+local pegs = {
+  Cn = 0,
+  Ck = 5, Dj = 5,
+  Dn = 10,
+  Dk = 15, Ej = 15,
+  En = 20,
+  Fn = 25,
+  Fk = 30, Gj = 30,
+  Gn = 35,
+  Gk = 40, Aj = 40,
+  An = 45,
+  Ak = 50, Bj = 50,
+  Bn = 55,
+}
 
 Asterodia.stocks = {
   'beadgcf', 'bfbfb', 'cgdae', 'eadgbe', 'fkbjdn'
 }
 
 Asterodia.gearbox = function(tuned)
-  local rocks = {}
-
   if tuned == 'beadgcf' then
-    rocks = {Fn, Cn, Gn, Dn, An, En, Bn}
+    return {pegs.Fn, pegs.Cn, pegs.Gn, pegs.Dn, pegs.An, pegs.En, pegs.Bn}
   elseif tuned == 'bfbfb' then
-    rocks = {Bn, Fn, Bn, Fn, Bn}
+    return {pegs.Bn, pegs.Fn, pegs.Bn, pegs.Fn, pegs.Bn}
   elseif tuned == 'cgdae' then
-    rocks = {En, An, Dn, Gn, Cn}
+    return {pegs.En, pegs.An, pegs.Dn, pegs.Gn, pegs.Cn}
   elseif tuned == 'eadgbe' then
-    rocks = {En, Bn, Gn, Dn, An, En}
+    return {pegs.En, pegs.Bn, pegs.Gn, pegs.Dn, pegs.An, pegs.En}
   elseif tuned == 'fkbjdn' then
-    rocks = {Dn, Bj, Fk, Dn, Bj, Fk}
+    return {pegs.Dn, pegs.Bj, pegs.Fk, pegs.Dn, pegs.Bj, pegs.Fk}
   else
-    rocks = {Cn}
+    return {pegs.Cn}
   end
-
-  return rocks
 end
 
 Asterodia.tuning = 'beadgcf' -- default
@@ -153,7 +161,7 @@ Asterodia.Naxos = function()
     local catalog = {}
     local liter = 1
 
-    for clef, data in pairs(base) do
+    for clef, _ in pairs(base) do
       catalog[liter] = clef
       liter = liter + 1
     end
