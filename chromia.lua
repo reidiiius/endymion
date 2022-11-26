@@ -3,16 +3,28 @@
 local Chromia = {}
 
 local function scribe(style, ...)
+  assert(type(style) == 'string', 'scribe param style not string')
+
+  local varies = table.pack(...)
+  assert(rawequal(#varies, varies.n), 'scribe varies length equality')
+  for liter = 1, varies.n do
+    assert(type(varies[liter]) == 'string', 'scribe param not string')
+  end
+
   io.write(string.format(style, ...))
   return nil
 end
 
-local function question(sign)
-  scribe('\n\t%s ?\n\n', sign)
+local function question(word)
+  assert(type(word) == 'string', 'question param not string')
+
+  scribe('\n\t%s ?\n\n', word)
   return nil
 end
 
-local function helper(genus)
+local function manual(genus)
+  assert(type(genus) == 'table', 'manual param not table')
+
   local cmd = string.format("%s %s", arg[-1], arg[0])
 
   scribe('\n%s\n', 'Usage:')
@@ -31,11 +43,14 @@ local function helper(genus)
   return nil
 end
 
-local function querier(clefs, sign)
+local function inquire(clefs, regex)
+  assert(type(clefs) == 'table', 'inquire param clefs not table')
+  assert(type(regex) == 'string', 'inquire param regex not string')
+
   local similar = {}
 
   for liter = 1, #clefs do
-    if string.match(clefs[liter], sign) then
+    if string.match(clefs[liter], regex) then
       table.insert(similar, clefs[liter])
     end
   end
@@ -44,6 +59,9 @@ local function querier(clefs, sign)
 end
 
 local function grouper(genus, graph)
+  assert(type(genus) == 'table', 'grouper param genus not table')
+  assert(type(graph) == 'string', 'grouper param graph not string')
+
   local base = require('olympiad')
   local similar = {}
   local yarn
@@ -64,10 +82,13 @@ local function grouper(genus, graph)
   return similar
 end
 
-local function machine(genus, sign)
+local function machine(genus, tuned)
+  assert(type(genus) == 'table', 'machine param genus not table')
+  assert(type(tuned) == 'string', 'machine param tuned not string')
+
   for liter = 1, #genus.stocks do
-    if string.match(sign, genus.stocks[liter]) then
-      genus.tuning = sign
+    if string.match(tuned, genus.stocks[liter]) then
+      genus.tuning = tuned
       genus.stones = genus.gearbox(genus.tuning)
       break
     end
@@ -76,27 +97,34 @@ local function machine(genus, sign)
   return nil
 end
 
-local function weaver(genus, list)
+local function weaver(genus, clefs)
+  assert(type(genus) == 'table', 'weaver param genus not table')
+  assert(type(clefs) == 'table', 'weaver param clefs not table')
+
   print()
-  for liter = 1, #list do
-    genus.Eurycyda(list[liter])
+  for liter = 1, #clefs do
+    genus.Eurycyda(clefs[liter])
   end
 
   return nil
 end
 
-local function layout(refun, list, numb, sign)
-  if #list > 0 then
-    refun(list)
-    if #list % numb ~= 0 then print() end
+local function layout(hash)
+  assert(type(hash) == 'table', 'layout param not table')
+
+  if #hash.list > 0 then
+    hash.proc(hash.list)
+    if #hash.list % hash.numb ~= 0 then print() end
   else
-    question(sign)
+    question(hash.sign)
   end
 
   return nil
 end
 
 Chromia.Aetolus = function(signs)
+  assert(type(signs) == 'table', 'Aetolus param not table')
+
   local genus = require('asterodia')
   local columns = 7
 
@@ -109,15 +137,19 @@ Chromia.Aetolus = function(signs)
     elseif signs[1] == 'gamut' then
       weaver(genus, clefs)
     elseif signs[1] == 'help' then
-      helper(genus)
+      manual(genus)
     elseif signs[1] == 'query' and signs[2] then
-      local similar = querier(clefs, signs[2])
+      local similar = inquire(clefs, signs[2])
 
-      layout(genus.Paeon, similar, columns, signs[2])
+      layout{
+        proc = genus.Paeon, list = similar, numb = columns, sign = signs[2]
+      }
     elseif signs[1] == 'group' and signs[2] then
       local similar = grouper(genus, signs[2])
 
-      layout(genus.Paeon, similar, columns, signs[2])
+      layout{
+        proc = genus.Paeon, list = similar, numb = columns, sign = signs[2]
+      }
     elseif string.match(signs[1], '^[a-g]+[j-n]?') and signs[2] then
       machine(genus, signs[1]) -- stones setter
 
@@ -144,6 +176,8 @@ end
 
 -- validate input
 Chromia.Epeius = function(input)
+  assert(type(input) == 'table', 'Epeius param not table')
+
   local base = require('olympiad')
 
   if type(base) == 'table' then
