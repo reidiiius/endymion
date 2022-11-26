@@ -48,7 +48,7 @@ end
 Softest.epeius = function()
   local okay, errs
   local name = 'epeius'
-  local refun = require('chromia')
+  local refer = require('chromia')
   local inputs = {{nil}, {'j3k56m4h'}}
   local maxine = {}
 
@@ -63,7 +63,7 @@ Softest.epeius = function()
   table.insert(inputs, {'0123456789'})
 
   for liter = 1, #inputs do
-    okay, errs = pcall(refun.Epeius, inputs[liter])
+    okay, errs = pcall(refer.Epeius, inputs[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
   end
@@ -74,7 +74,7 @@ end
 Softest.aetolus = function()
   local okay, errs
   local name = 'aetolus'
-  local refun = require('chromia')
+  local refer = require('chromia')
   local values = {
     {'gamut'},
     {'cgdae', 'gamut'},
@@ -89,7 +89,7 @@ Softest.aetolus = function()
   }
 
   for liter = 1, #values do
-    okay, errs = pcall(refun.Aetolus, values[liter])
+    okay, errs = pcall(refer.Aetolus, values[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
   end
@@ -100,12 +100,12 @@ end
 Softest.eurycyda = function()
   local okay, errs
   local name = 'eurycyda'
-  local refun = require('asterodia')
+  local refer = require('asterodia')
   local inputs = {nil, 'k9', 'n0', 'j367', 'z0'}
 
   for liter = 1, #inputs do
     print()
-    okay, errs = pcall(refun.Eurycyda, inputs[liter])
+    okay, errs = pcall(refer.Eurycyda, inputs[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
   end
@@ -116,12 +116,12 @@ end
 Softest.naxos = function()
   local okay, errs
   local name = 'naxos'
-  local refun = require('asterodia')
+  local refer = require('asterodia')
 
-  okay, errs = pcall(refun.Naxos, nil)
+  okay, errs = pcall(refer.Naxos, nil)
 
   if okay then
-    local list = refun.Naxos()
+    local list = refer.Naxos()
 
     print()
     for liter = 1, #list do
@@ -140,10 +140,10 @@ end
 Softest.paeon = function()
   local okay, errs
   local name = 'paeon'
-  local refun = require('asterodia')
-  local list = refun.Naxos()
+  local refer = require('asterodia')
+  local list = refer.Naxos()
 
-  okay, errs = pcall(refun.Paeon, list)
+  okay, errs = pcall(refer.Paeon, list)
   tested = tested + 1
   process(name, 1, okay, errs)
 
@@ -153,8 +153,8 @@ end
 Softest.toggle = function()
   local okay, errs
   local name = 'toggle'
-  local refun = require('asterodia')
-  local value = refun.toggle
+  local refer = require('asterodia')
+  local value = refer.toggle
   local boole = rawequal(type(value), 'boolean')
 
   okay, errs = pcall(assert, boole, 'toggle not boolean')
@@ -167,11 +167,11 @@ end
 Softest.morph = function()
   local okay, errs
   local name = 'morph'
-  local refun = require('asterodia')
+  local refer = require('asterodia')
   local lyres = require('olympiad')
   local value = lyres.n0
 
-  okay, errs = pcall(refun.morph, value)
+  okay, errs = pcall(refer.morph, value)
   tested = tested + 1
   process(name, 1, okay, errs)
 
@@ -181,9 +181,9 @@ end
 Softest.stones = function()
   local okay, errs
   local name = 'stones'
-  local refun = require('asterodia')
-  local tuned = refun.tuning
-  local value = refun.gearbox(tuned)
+  local refer = require('asterodia')
+  local tuned = refer.tuning
+  local value = refer.gearbox(tuned)
   local boole = rawequal(type(value), 'table')
 
   okay, errs = pcall(assert, boole, 'stones not table')
@@ -196,13 +196,13 @@ end
 Softest.gearbox = function()
   local okay, errs
   local name = 'gearbox'
-  local refun = require('asterodia')
-  local values = refun.stocks
+  local refer = require('asterodia')
+  local values = refer.stocks
 
   table.insert(values, 'abcdefg') -- matchless
 
   for liter = 1, #values do
-    okay, errs = pcall(refun.gearbox, values[liter])
+    okay, errs = pcall(refer.gearbox, values[liter])
     tested = tested + 1
     process(name, liter, okay, errs)
   end
@@ -213,7 +213,7 @@ end
 Softest.olympiad = function()
   local desc, okay, errs
   local name = 'olympiad'
-  local lyres = require('olympiad')
+  local lyres = require(name)
   local numb = 0
 
   for clef, value in pairs(lyres) do
