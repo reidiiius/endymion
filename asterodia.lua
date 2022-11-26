@@ -5,17 +5,27 @@ local Asterodia = {}
 local bank = setmetatable(require('olympiad'), {
 
   __index = function(bank, sign)
-    local nyx = string.rep(string.char(95), 4) .. string.char(32)
-
     local tune = function(key, ndx)
+      assert(type(key) == 'string', 'tune param key not string')
+      assert(type(ndx) == 'number', 'tune param ndx not number')
+
       local wire = bank[key]
       local head = string.sub(wire, (ndx + 1), -1)
       local tail = string.sub(wire, 1, ndx)
+      local rope = head .. tail
 
-      return head .. tail
+      assert(string.len(rope) == 60, 'rope length not 60 characters')
+      return rope
     end
 
-    if sign == 'z0' then return string.rep(nyx, 12)
+    if sign == 'i0' or sign == 'z0' then
+      local erebus = string.char(32)
+      local hypnos = string.char(95)
+      local aether = string.rep(hypnos, 4) .. erebus
+      local hemera = string.rep(aether, 12)
+
+      assert(string.len(hemera) == 60, 'hemera length not 60 characters')
+      return hemera
     elseif sign == 'n145' then return tune('n0', 20)
     elseif sign == 'j367' then return tune('n0', 45)
     elseif sign == 'j37'  then return tune('n0', 10)
@@ -61,19 +71,24 @@ Asterodia.stocks = {
 }
 
 Asterodia.gearbox = function(tuned)
+  assert(type(tuned) == 'string', 'gearbox param not string')
+
+  local box;
   if tuned == 'beadgcf' then
-    return {pegs.Fn, pegs.Cn, pegs.Gn, pegs.Dn, pegs.An, pegs.En, pegs.Bn}
+    box = {pegs.Fn, pegs.Cn, pegs.Gn, pegs.Dn, pegs.An, pegs.En, pegs.Bn}
   elseif tuned == 'bfbfb' then
-    return {pegs.Bn, pegs.Fn, pegs.Bn, pegs.Fn, pegs.Bn}
+    box = {pegs.Bn, pegs.Fn, pegs.Bn, pegs.Fn, pegs.Bn}
   elseif tuned == 'cgdae' then
-    return {pegs.En, pegs.An, pegs.Dn, pegs.Gn, pegs.Cn}
+    box = {pegs.En, pegs.An, pegs.Dn, pegs.Gn, pegs.Cn}
   elseif tuned == 'eadgbe' then
-    return {pegs.En, pegs.Bn, pegs.Gn, pegs.Dn, pegs.An, pegs.En}
+    box = {pegs.En, pegs.Bn, pegs.Gn, pegs.Dn, pegs.An, pegs.En}
   elseif tuned == 'fkbjdn' then
-    return {pegs.Dn, pegs.Bj, pegs.Fk, pegs.Dn, pegs.Bj, pegs.Fk}
+    box = {pegs.Dn, pegs.Bj, pegs.Fk, pegs.Dn, pegs.Bj, pegs.Fk}
   else
-    return {pegs.Cn}
+    box = {pegs.Cn}
   end
+
+  return box
 end
 
 Asterodia.tuning = 'beadgcf' -- default
@@ -86,6 +101,8 @@ local trans = {
 }
 
 Asterodia.morph = function(str)
+  assert(type(str) == 'string', 'morph param not string')
+
   local yarn;
   yarn = string.gsub(str, '(%u%l)', trans)
   yarn = string.gsub(yarn, '____', '__')
@@ -97,10 +114,14 @@ end
 Asterodia.toggle = true
 
 local function tuner(str, ndx)
+  assert(type(str) == 'string', 'tuner param str not string')
+  assert(type(ndx) == 'number', 'tuner param ndx not number')
+
   local head = string.sub(str, (ndx + 1), -1)
   local tail = string.sub(str, 1, ndx)
   local rope = head .. tail
 
+  assert(string.len(rope) == 60, 'rope length not 60 characters')
   if Asterodia.toggle then
     return Asterodia.morph(rope)
   else
@@ -109,10 +130,14 @@ local function tuner(str, ndx)
 end
 
 local function tabbed(str)
+  assert(type(str) == 'string', 'tabbed param not string')
   return string.format("\t%s", str)
 end
 
 local function board(header, stream)
+  assert(type(header) == 'string', 'board param header not string')
+  assert(type(stream) == 'string', 'board param stream not string')
+
   print(tabbed(header))
   for pitch = 1, #Asterodia.stones do
     print(tabbed(tuner(stream, Asterodia.stones[pitch])))
@@ -125,6 +150,8 @@ end
 local cronus = os.time()
 
 Asterodia.Eurycyda = function(sign)
+  assert(type(sign) == 'string', 'Eurycyda param not string')
+
   if type(bank) == 'table' then
 
     if bank[sign] then
@@ -169,7 +196,6 @@ Asterodia.Naxos = function()
     catalog[#catalog + 1] = 'z0'
 
     table.sort(catalog)
-
     return catalog
   else
     error("base is type ".. type(base), 1)
@@ -177,6 +203,8 @@ Asterodia.Naxos = function()
 end
 
 Asterodia.Paeon = function(list)
+  assert(type(list) == 'table', 'Paeon param not table')
+
   print()
   for item = 1, #list, 1 do
     if (item % 7 == 0) then

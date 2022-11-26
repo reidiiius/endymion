@@ -101,7 +101,7 @@ Softest.eurycyda = function()
   local okay, errs
   local name = 'eurycyda'
   local refer = require('asterodia')
-  local inputs = {nil, 'k9', 'n0', 'j367', 'z0'}
+  local inputs = {'k2j17', 'k9', 'n0', 'j367', 'z0'}
 
   for liter = 1, #inputs do
     print()
